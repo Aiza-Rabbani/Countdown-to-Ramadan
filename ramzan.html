@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Countdown to Ramazan</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #00796b;
+      flex-direction: column;
+      text-align: center;
+    }
+    #container {
+      background: white;
+      padding: 20px 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    #time {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    #countdown {
+      font-size: 1.5rem;
+      color: #00796b;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container">
+    <div id="time"></div>
+    <div id="countdown"></div>
+  </div>
+
+  <script>
+   const timeEl = document.getElementById('time');
+    const countdownEl = document.getElementById('countdown');
+
+    // Set Ramadan date (adjust year if needed)
+    const ramadanDate = new Date("17 February, 2026");
+
+    // This function updates time and countdown every second
+    function updateTime() {
+      // Get current date and time
+      const now = new Date();
+
+      // Show current time in readable format
+      timeEl.textContent = now.toLocaleString();
+
+      // Convert dates to milliseconds for calculation
+      const nowMs = now.getTime();
+      const ramadanMs = ramadanDate.getTime();
+
+      // Calculate difference in milliseconds
+      const diff = ramadanMs - nowMs;
+
+      // Check if Ramadan is still in the future
+      if (diff > 0) {
+        // Calculate how many days left (round to nearest day)
+        const daysLeft = Math.round(diff / (1000 * 60 * 60 * 24));
+        countdownEl.textContent = `Days until Ramadan: ${daysLeft}`;
+      }
+      // If Ramadan is exactly now
+      else if (diff === 0) {
+        countdownEl.textContent = "Ramadan starts today!";
+      }
+      // If Ramadan already started or passed
+      else {
+        countdownEl.textContent = "Ramadan has started!";
+      }
+    }
+
+    // Run updateTime every 1 second (1000 milliseconds)
+    setInterval(updateTime, 1000);
+
+    // Run once immediately on page load to avoid delay
+    updateTime();
+  </script>
+
+</body>
+</html>
